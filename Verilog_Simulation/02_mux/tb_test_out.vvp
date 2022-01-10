@@ -1,0 +1,86 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1110-g18392a46)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_00000251f4d8ce20 .scope module, "tb_testbench" "tb_testbench" 2 6;
+ .timescale -9 -12;
+v00000251f4c72620_0 .net "n1", 0 0, v00000251f4d8d9e0_0;  1 drivers
+v00000251f4c72ee0_0 .net "n2", 0 0, v00000251f4c72da0_0;  1 drivers
+v00000251f4c728a0_0 .net "n3", 0 0, v00000251f4c73340_0;  1 drivers
+v00000251f4c73160_0 .net "n4", 0 0, L_00000251f4d8db10;  1 drivers
+E_00000251f4c783c0 .event anyedge, v00000251f4d87120_0, v00000251f4d8abe0_0, v00000251f4d86fa0_0, v00000251f4d8d140_0;
+S_00000251f4d8cfb0 .scope module, "dut" "my_mux" 2 13, 3 8 0, S_00000251f4d8ce20;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "sel";
+    .port_info 3 /OUTPUT 1 "out";
+L_00000251f4d8aac0 .functor NOT 1, v00000251f4c73340_0, C4<0>, C4<0>, C4<0>;
+L_00000251f4d86bd0 .functor AND 1, v00000251f4d8d9e0_0, L_00000251f4d8aac0, C4<1>, C4<1>;
+L_00000251f4d86c40 .functor AND 1, v00000251f4c72da0_0, v00000251f4c73340_0, C4<1>, C4<1>;
+L_00000251f4d8db10 .functor OR 1, L_00000251f4d86bd0, L_00000251f4d86c40, C4<0>, C4<0>;
+v00000251f4d8d140_0 .net "a", 0 0, v00000251f4d8d9e0_0;  alias, 1 drivers
+v00000251f4d86fa0_0 .net "b", 0 0, v00000251f4c72da0_0;  alias, 1 drivers
+v00000251f4d87120_0 .net "out", 0 0, L_00000251f4d8db10;  alias, 1 drivers
+v00000251f4c74640_0 .net "out1", 0 0, L_00000251f4d86bd0;  1 drivers
+v00000251f4d86e00_0 .net "out2", 0 0, L_00000251f4d86c40;  1 drivers
+v00000251f4d8abe0_0 .net "sel", 0 0, v00000251f4c73340_0;  alias, 1 drivers
+v00000251f4d8bab0_0 .net "selb", 0 0, L_00000251f4d8aac0;  1 drivers
+S_00000251f4d8bb50 .scope module, "tester" "mux_test" 2 10, 4 1 0, S_00000251f4d8ce20;
+ .timescale -9 -12;
+    .port_info 0 /OUTPUT 1 "t1";
+    .port_info 1 /OUTPUT 1 "t2";
+    .port_info 2 /OUTPUT 1 "t3";
+    .port_info 3 /INPUT 1 "p";
+v00000251f4d8d940_0 .net "p", 0 0, L_00000251f4d8db10;  alias, 1 drivers
+v00000251f4d8d9e0_0 .var "t1", 0 0;
+v00000251f4c72da0_0 .var "t2", 0 0;
+v00000251f4c73340_0 .var "t3", 0 0;
+    .scope S_00000251f4d8bb50;
+T_0 ;
+    %pushi/vec4 1, 0, 1;
+    %assign/vec4 v00000251f4d8d9e0_0, 0;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v00000251f4c72da0_0, 0;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v00000251f4c73340_0, 0;
+    %delay 100000, 0;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v00000251f4c73340_0, 0;
+    %delay 100000, 0;
+    %pushi/vec4 1, 0, 1;
+    %assign/vec4 v00000251f4c73340_0, 0;
+    %delay 100000, 0;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v00000251f4c73340_0, 0;
+    %delay 100000, 0;
+    %pushi/vec4 1, 0, 1;
+    %assign/vec4 v00000251f4c73340_0, 0;
+    %vpi_call 4 25 "$finish" {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_00000251f4d8ce20;
+T_1 ;
+    %wait E_00000251f4c783c0;
+    %delay 1000, 0;
+    %vpi_call 2 18 "$display", "%b %b %b %b", v00000251f4c72620_0, v00000251f4c72ee0_0, v00000251f4c728a0_0, v00000251f4c73160_0 {0 0 0};
+    %jmp T_1;
+    .thread T_1, $push;
+    .scope S_00000251f4d8ce20;
+T_2 ;
+    %vpi_call 2 22 "$dumpfile", "tb_test_out.vcd" {0 0 0};
+    %vpi_call 2 23 "$dumpvars", 32'sb00000000000000000000000000000000, S_00000251f4d8cfb0 {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "tb_testbench.v";
+    "my_mux.v";
+    "mux_test.v";
